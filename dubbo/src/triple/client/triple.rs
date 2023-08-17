@@ -165,12 +165,18 @@ impl TripleClient {
                 .expect("msg")
                 .list(arc_invocation.clone());
             let real_url = url_list.choose(&mut rand::thread_rng()).expect("msg");
-            http_uri =
-                http::Uri::from_str(&format!("http://{}:{}/", real_url.ip, real_url.port)).unwrap();
+            http_uri = http::Uri::from_str(&format!(
+                "{}://{}:{}/",
+                real_url.scheme, real_url.ip, real_url.port
+            ))
+            .unwrap();
             req = self.map_request(http_uri.clone(), path, sdk_body);
         }
 
-        let mut conn = Connection::new().with_host(http_uri);
+        let mut conn = Connection::new().with_host(http_uri.clone());
+        if let Some(scheme) = http_uri.scheme_str() {
+            conn = conn.with_connector(scheme.to_string());
+        }
         let response = conn
             .call(req)
             .await
@@ -239,11 +245,17 @@ impl TripleClient {
                 .expect("msg")
                 .list(arc_invocation.clone());
             let real_url = url_list.choose(&mut rand::thread_rng()).expect("msg");
-            http_uri =
-                http::Uri::from_str(&format!("http://{}:{}/", real_url.ip, real_url.port)).unwrap();
+            http_uri = http::Uri::from_str(&format!(
+                "{}://{}:{}/",
+                real_url.scheme, real_url.ip, real_url.port
+            ))
+            .unwrap();
             req = self.map_request(http_uri.clone(), path, sdk_body);
         }
-        let mut conn = Connection::new().with_host(http_uri);
+        let mut conn = Connection::new().with_host(http_uri.clone());
+        if let Some(scheme) = http_uri.scheme_str() {
+            conn = conn.with_connector(scheme.to_string());
+        }
         let response = conn
             .call(req)
             .await
@@ -296,11 +308,17 @@ impl TripleClient {
                 .expect("msg")
                 .list(arc_invocation.clone());
             let real_url = url_list.choose(&mut rand::thread_rng()).expect("msg");
-            http_uri =
-                http::Uri::from_str(&format!("http://{}:{}/", real_url.ip, real_url.port)).unwrap();
+            http_uri = http::Uri::from_str(&format!(
+                "{}://{}:{}/",
+                real_url.scheme, real_url.ip, real_url.port
+            ))
+            .unwrap();
             req = self.map_request(http_uri.clone(), path, sdk_body);
         }
-        let mut conn = Connection::new().with_host(http_uri);
+        let mut conn = Connection::new().with_host(http_uri.clone());
+        if let Some(scheme) = http_uri.scheme_str() {
+            conn = conn.with_connector(scheme.to_string());
+        }
         let response = conn
             .call(req)
             .await
@@ -369,12 +387,18 @@ impl TripleClient {
                 .expect("msg")
                 .list(arc_invocation.clone());
             let real_url = url_list.choose(&mut rand::thread_rng()).expect("msg");
-            http_uri =
-                http::Uri::from_str(&format!("http://{}:{}/", real_url.ip, real_url.port)).unwrap();
+            http_uri = http::Uri::from_str(&format!(
+                "{}://{}:{}/",
+                real_url.scheme, real_url.ip, real_url.port
+            ))
+            .unwrap();
             req = self.map_request(http_uri.clone(), path, sdk_body);
         }
 
-        let mut conn = Connection::new().with_host(http_uri);
+        let mut conn = Connection::new().with_host(http_uri.clone());
+        if let Some(scheme) = http_uri.scheme_str() {
+            conn = conn.with_connector(scheme.to_string());
+        }
         let response = conn
             .call(req)
             .await
